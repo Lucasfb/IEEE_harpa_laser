@@ -27,6 +27,13 @@
 #define nota_la_sharp 58
 #define nota_si 59
 
+//Definição de que nota para cada botão
+int nota[NUMERO_TECLAS];
+void set_notes(){
+    nota[0] = nota_mi;
+    nota[1] = nota_fa;
+}
+
 bool botao_atual[12] = {false, false, false, false, false, false, false, false, false, false, false, false};
 bool botao_anterior[12] = {false, false, false, false, false, false, false, false, false, false, false, false};
 
@@ -52,7 +59,14 @@ void noteOff(byte channel, byte pitch, byte velocity) {
 }
 
 void executar_nota(bool estado_atual, bool estado_anterior, int botao) {
-  //A fazer
+  if (estado_atual == false && estado_anterior == true){
+    noteOn(1, nota_do, 50);
+    MidiUSB.flush();
+  } 
+  if (estado_atual == true && estado_anterior == false) {
+    noteOff (1, nota_do, 50);
+    MidiUSB.flush();
+  }
 }
 
 void setup() {
